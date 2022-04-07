@@ -53,6 +53,7 @@ class QuizBrain {
     }
   }
 
+
   void reset() {
     _questionNumber = 0;
   }

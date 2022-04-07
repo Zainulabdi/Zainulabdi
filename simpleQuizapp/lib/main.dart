@@ -5,14 +5,67 @@ import 'dart:async';
 
 QuizBrain quizBrain = QuizBrain();
 
-void main() => runApp(QuizApp());
+void main() {
+  runApp(SplashScreen());
+}
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Splash Screen',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+        Duration(seconds: 6),
+            () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => QuizApp())));
+  } //<- Creates an object that fetches an image.
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+          children: <Widget>[
+            Image(image: AssetImage("asset/mainpic.gif"), height: 500),
+            Text("Zain-ul-abdin", style: TextStyle(fontSize: 40)),
+            Text("FA19-BCS-107", style: TextStyle(fontSize: 40)),
+            SizedBox(
+              height: 5,
+            ),
+            CircularProgressIndicator()
+          ],
+        ));
+  }
+}
+
 
 class QuizApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
+        appBar: AppBar(
+          centerTitle: true,
+          leading: Icon(Icons.account_box_outlined),
+          title: Text('Quiz APP'),
+          backgroundColor: Colors.deepOrange,
+        ),
+        backgroundColor: Colors.black,
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -39,7 +92,7 @@ class _QuizPageState extends State<QuizPage> {
   Timer _timer;
   void timerstart()
   {
-    _counter=10;
+    _counter=20;
     _timer=Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         if(_counter>0)
@@ -55,7 +108,7 @@ class _QuizPageState extends State<QuizPage> {
             scoreKeeper.add(
               Icon(
                 Icons.close,
-                color: Colors.red,
+                color: Colors.white,
               ),
             );
           }
@@ -99,12 +152,12 @@ class _QuizPageState extends State<QuizPage> {
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(Icon(
             Icons.check,
-            color: Colors.green,
+            color: Colors.deepOrange,
           ));
         } else {
           scoreKeeper.add(Icon(
             Icons.close,
-            color: Colors.red,
+            color: Colors.white,
           ));
         }
         quizBrain.nextQuestion();
@@ -167,7 +220,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
               textColor: Colors.white,
-              color: Colors.green,
+              color: Colors.deepOrange,
               child: Text(
                 'True',
                 style: TextStyle(
@@ -186,12 +239,12 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
-              color: Colors.red,
+              color: Colors.white,
               child: Text(
                 'False',
                 style: TextStyle(
                   fontSize: 20.0,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               onPressed: () {
